@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parqueos en uso - Nivel 1</title>
+    <style>
+        /* Estilos CSS opcionales para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Parqueos en uso - Nivel 1</h1>
+
+    <!-- Contenedor para la tabla generada dinámicamente -->
+    <div id="table-container"></div>
+
+    <script>
+        // Script JavaScript para mostrar los datos almacenados en localStorage en una tabla
+        function mostrarDatosLocalStorage() {
+            const existingData = JSON.parse(localStorage.getItem('estadoParqueosNivel1')) || [];
+
+            if (existingData.length === 0) {
+                console.log('No hay datos almacenados en localStorage.');
+                return;
+            }
+
+            const table = document.createElement('table');
+            const thead = table.createTHead();
+            const tbody = table.createTBody();
+
+            const headerRow = thead.insertRow();
+            const headers = ['ID', 'Ocupado', 'Nombre', 'DPI', 'Fecha y Hora', 'Código de Visita'];
+            headers.forEach(header => {
+                const headerCell = headerRow.insertCell();
+                headerCell.textContent = header;
+            });
+
+            existingData.forEach(data => {
+                const row = tbody.insertRow();
+                const cells = ['id', 'ocupado', 'nombre', 'dpi', 'fechaHora', 'codigoVisita'];
+                cells.forEach(cell => {
+                    const cellValue = data[cell];
+                    const cellElement = row.insertCell();
+                    cellElement.textContent = cellValue;
+                });
+            });
+
+            const tableContainer = document.getElementById('table-container');
+            tableContainer.innerHTML = '';
+            tableContainer.appendChild(table);
+        }
+
+        window.onload = mostrarDatosLocalStorage;
+    </script>
+</body>
+</html>
+
+
+
